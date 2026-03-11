@@ -18,13 +18,16 @@ export default function StudentDashboard({ data }) {
     fetchNotices();
   }, []);
 
-  if (!data) return <p>Loading...</p>;
+  if (!data) {
+    return <p className="text-center mt-5">Loading dashboard...</p>;
+  }
 
   return (
     <div className="container my-5">
 
       <h3 className="fw-bold mb-4">Student Dashboard</h3>
 
+      {/* Summary Cards */}
       <div className="row mb-4">
 
         <div className="col-md-3">
@@ -59,19 +62,30 @@ export default function StudentDashboard({ data }) {
 
       <div className="row">
 
+        {/* Subjects Section */}
         <div className="col-md-7">
+
           <h5 className="fw-bold">Your Subjects</h5>
 
           <ul className="list-group mt-3">
-            {(data.subjects || []).map((sub) => (
-              <li key={sub.id} className="list-group-item">
-                {sub.subject_code} – {sub.subject_name}
+            {(data.subjects || []).length === 0 ? (
+              <li className="list-group-item text-muted">
+                No subjects assigned
               </li>
-            ))}
+            ) : (
+              (data.subjects || []).map((sub) => (
+                <li key={sub.id} className="list-group-item">
+                  {sub.subject_code} – {sub.subject_name}
+                </li>
+              ))
+            )}
           </ul>
+
         </div>
 
+        {/* Notices Section */}
         <div className="col-md-5">
+
           <div className="card shadow-sm p-3">
             <h5 className="fw-bold">📢 Notices</h5>
 
@@ -79,7 +93,7 @@ export default function StudentDashboard({ data }) {
               <p className="text-muted mt-2">No notices available</p>
             ) : (
               <ul className="list-group list-group-flush mt-2">
-                {notices.slice(0,5).map((notice) => (
+                {notices.slice(0, 5).map((notice) => (
                   <li key={notice.id} className="list-group-item">
                     <strong>{notice.title}</strong>
                     <p className="mb-0 small">{notice.message}</p>
@@ -89,6 +103,7 @@ export default function StudentDashboard({ data }) {
             )}
 
           </div>
+
         </div>
 
       </div>

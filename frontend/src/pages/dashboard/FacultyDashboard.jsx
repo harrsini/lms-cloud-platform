@@ -11,7 +11,7 @@ export default function FacultyDashboard({ data }) {
 
   const fetchNotices = async () => {
     try {
-      const res = await API.get("notices/");
+      const res = await API.get("/notices/");
       setNotices(res.data);
     } catch (err) {
       console.error("Failed to fetch notices", err);
@@ -23,27 +23,26 @@ export default function FacultyDashboard({ data }) {
 
       <h3 className="fw-bold mb-4">Faculty Dashboard</h3>
 
-      {/* Summary Cards */}
       <div className="row mb-4">
 
         <div className="col-md-4">
           <div className="card shadow-sm text-center p-3">
             <h6>Subjects Handled</h6>
-            <h3>{data.subjects_handled}</h3>
+            <h3>{data.subjects_handled || 0}</h3>
           </div>
         </div>
 
         <div className="col-md-4">
           <div className="card shadow-sm text-center p-3">
             <h6>Assignments Created</h6>
-            <h3>{data.assignments_created}</h3>
+            <h3>{data.assignments_created || 0}</h3>
           </div>
         </div>
 
         <div className="col-md-4">
           <div className="card shadow-sm text-center p-3">
             <h6>Total Submissions</h6>
-            <h3>{data.total_submissions}</h3>
+            <h3>{data.total_submissions || 0}</h3>
           </div>
         </div>
 
@@ -51,13 +50,12 @@ export default function FacultyDashboard({ data }) {
 
       <div className="row">
 
-        {/* Subjects Section */}
         <div className="col-md-7">
 
           <h5 className="fw-bold">Subjects Handled</h5>
 
           <ul className="list-group mt-3">
-            {data.subjects.map((sub) => (
+            {(data.subjects || []).map((sub) => (
               <li key={sub.id} className="list-group-item">
                 {sub.subject_code} – {sub.subject_name}
               </li>
@@ -66,7 +64,6 @@ export default function FacultyDashboard({ data }) {
 
         </div>
 
-        {/* Notices */}
         <div className="col-md-5">
 
           <div className="card shadow-sm p-3">
