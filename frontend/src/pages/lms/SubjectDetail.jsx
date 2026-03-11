@@ -83,6 +83,7 @@ export default function SubjectDetail() {
 
   // ================= SUBMIT ASSIGNMENT =================
   const handleSubmitAssignment = async (assignmentId) => {
+
     if (!submissionFile) {
       alert("Please select a file first");
       return;
@@ -90,19 +91,20 @@ export default function SubjectDetail() {
 
     const formData = new FormData();
     formData.append("file", submissionFile);
+    formData.append("assignment", assignmentId);
 
     try {
-      await API.post(`lms/submit/${assignmentId}/`, formData, {
-        headers: { "Content-Type": "multipart/form-data" }
-      });
 
-      alert("Assignment submitted!");
+      await API.post(`lms/submit/${assignmentId}/`, formData);
+
+      alert("Assignment submitted successfully!");
       setSubmissionFile(null);
 
     } catch (err) {
-      console.error(err);
+      console.error(err.response?.data || err);
       alert("Submission failed");
     }
+
   };
 
   // ================= VIEW SUBMISSIONS =================
