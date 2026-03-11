@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const BASE_URL = "https://lms-cloud-platform.onrender.com/api/";
+export const BASE_URL = "https://lms-cloud-platform.onrender.com";
 
 const API = axios.create({
   baseURL: `${BASE_URL}/api/`,
