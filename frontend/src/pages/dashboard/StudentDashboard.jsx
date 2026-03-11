@@ -18,39 +18,40 @@ export default function StudentDashboard({ data }) {
     fetchNotices();
   }, []);
 
+  if (!data) return <p>Loading...</p>;
+
   return (
     <div className="container my-5">
 
       <h3 className="fw-bold mb-4">Student Dashboard</h3>
 
-      {/* Summary Cards */}
       <div className="row mb-4">
 
         <div className="col-md-3">
           <div className="card shadow-sm text-center p-3">
             <h6>Total Subjects</h6>
-            <h3>{data.total_subjects}</h3>
+            <h3>{data.total_subjects || 0}</h3>
           </div>
         </div>
 
         <div className="col-md-3">
           <div className="card shadow-sm text-center p-3">
             <h6>Total Assignments</h6>
-            <h3>{data.total_assignments}</h3>
+            <h3>{data.total_assignments || 0}</h3>
           </div>
         </div>
 
         <div className="col-md-3">
           <div className="card shadow-sm text-center p-3">
             <h6>Submitted</h6>
-            <h3>{data.submitted_assignments}</h3>
+            <h3>{data.submitted_assignments || 0}</h3>
           </div>
         </div>
 
         <div className="col-md-3">
           <div className="card shadow-sm text-center p-3">
             <h6>Pending</h6>
-            <h3 className="text-danger">{data.pending_assignments}</h3>
+            <h3 className="text-danger">{data.pending_assignments || 0}</h3>
           </div>
         </div>
 
@@ -58,24 +59,19 @@ export default function StudentDashboard({ data }) {
 
       <div className="row">
 
-        {/* Subjects Section */}
         <div className="col-md-7">
-
           <h5 className="fw-bold">Your Subjects</h5>
 
           <ul className="list-group mt-3">
-            {data.subjects.map((sub) => (
+            {(data.subjects || []).map((sub) => (
               <li key={sub.id} className="list-group-item">
                 {sub.subject_code} – {sub.subject_name}
               </li>
             ))}
           </ul>
-
         </div>
 
-        {/* Notice Board */}
         <div className="col-md-5">
-
           <div className="card shadow-sm p-3">
             <h5 className="fw-bold">📢 Notices</h5>
 
@@ -93,7 +89,6 @@ export default function StudentDashboard({ data }) {
             )}
 
           </div>
-
         </div>
 
       </div>
